@@ -1,0 +1,81 @@
+// This mini project tells if the credit card is valid or not on the basis of credit card number
+// If valid it tells which company it belongs to
+
+#include <stdio.h>
+
+int main(void)
+{
+	long n; 
+	// Get card number
+	printf("Enter the credit card number: "); 
+	scanf("%ld",&n);
+	// Count length 
+	int i =0;
+	long cc = n;
+	while(cc > 0)
+	{
+		cc = cc/10;
+		i++;
+	}
+	
+	// Check if entered numner is valid 
+	if (i != 13 && i != 15 && i != 16)
+	{
+		printf("INVALID INPUT");
+		return 0;
+	}
+	
+	// Separating Card number digit wise and assigning it to an array 
+	int ccnumb[16];
+	long m = n;
+	int mod;
+	int size = i-1;
+	int sum1=0; int sum2=0;
+	int sum;
+	int mod1,mod2;
+	do
+	{
+		
+		mod = m % 10;
+		m = m / 10;
+		ccnumb[size] = mod;
+		size--;
+		
+	} while (m > 0);
+	
+	for(int k = i-1; k > 0; k = k - 2)
+	{
+	    mod1 = ccnumb[k-1]*2; 
+	    mod1 = mod1 % 10 + mod1/10;
+	    
+	    sum1 = sum1 + mod1;
+	    mod2 = ccnumb[k];
+	    sum2 = sum2 + mod2;
+	}
+	sum = sum1 + sum2;
+
+	
+	if(sum % 10 != 0)
+	{
+	    printf("Your credit card number is invalid\n");
+	}
+	else printf("Your credit card number is valid.\n\n");
+
+	int start = (ccnumb[0]*10 + ccnumb[1]);
+	
+	if((start / 10 == 5) && (0 < start % 10 && start % 10 < 6))
+	{
+	    printf("MASTERCARD");
+	}
+	
+	else if((start / 10 == 3) && (start % 10 == 4 || start % 10 == 7))
+	{
+	    printf("AMERICAN EXPRESS");
+	}
+	
+	else if(start / 10 == 4)
+	{
+	    printf("VISA");
+	}
+	return 0;
+}
